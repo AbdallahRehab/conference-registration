@@ -7,9 +7,9 @@ import java.sql.PreparedStatement;
 
 import jakarta.servlet.http.*;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.annotation.*;
 
-@WebServlet("/register")
+@WebServlet(value = "/register")
 public class RegisterServlet extends HttpServlet {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -20,6 +20,11 @@ public class RegisterServlet extends HttpServlet {
         String phone = request.getParameter("phone");
         String organization = request.getParameter("organization");
 
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         String jdbcURL = "jdbc:mysql://localhost:3306/conference_db";
         String dbUser = "root";
         String dbPassword = "password";
